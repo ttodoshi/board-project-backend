@@ -65,10 +65,31 @@ services:
       PORT: 8080
       PROFILE: "dev"# dev, prod
       LOG_LEVEL: "debug"#trace, debug, info, warn, error
+      REDIS_ADDR: "redis:6379"
       CONSUL_HOST: "consul:8500"
       CONSUL_SERVICE_NAME: "room-service"
       CONSUL_SERVICE_ADDRESS: "board-project-room-service"
       CONSUL_TAGS: "urlprefix-/api/v1/rooms"
+    networks:
+      - board-project
+
+  board-project-websocket-gateway:
+    container_name: board-project-websocket-gateway-container
+    image: ghcr.io/ttodoshi/board-project-websocket-gateway:latest
+    ports:
+      - "8090:8090"
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      PORT: 8090
+      PROFILE: "dev"# dev, prod
+      LOG_LEVEL: "debug"#trace, debug, info, warn, error
+      REDIS_ADDR: "redis:6379"
+      CONSUL_HOST: "consul:8500"
+      CONSUL_SERVICE_NAME: "websocket-gateway"
+      CONSUL_SERVICE_ADDRESS: "board-project-websocket-gateway"
+      CONSUL_TAGS: "urlprefix-/api/v1/ws,proto=ws"
     networks:
       - board-project
 
