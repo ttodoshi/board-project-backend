@@ -53,9 +53,9 @@ services:
     networks:
       - board-project
 
-  board-project-room-service:
-    container_name: board-project-room-service-container
-    image: ghcr.io/ttodoshi/board-project-room-service:latest
+  board-project-1:
+    container_name: board-project-container
+    image: ghcr.io/ttodoshi/board-project:latest
     ports:
       - "8080:8080"
     depends_on:
@@ -67,31 +67,31 @@ services:
       LOG_LEVEL: "debug"#trace, debug, info, warn, error
       REDIS_ADDR: "redis:6379"
       CONSUL_HOST: "consul:8500"
-      CONSUL_SERVICE_NAME: "room-service"
-      CONSUL_SERVICE_ADDRESS: "board-project-room-service"
-      CONSUL_TAGS: "urlprefix-/api/v1/rooms"
+      CONSUL_SERVICE_NAME: "board-project"
+      CONSUL_SERVICE_ADDRESS: "board-project-1"
+      CONSUL_TAGS: "urlprefix-/api/v1"
     networks:
       - board-project
 
-  board-project-websocket-gateway:
-    container_name: board-project-websocket-gateway-container
-    image: ghcr.io/ttodoshi/board-project-websocket-gateway:latest
-    ports:
-      - "8090:8090"
-    depends_on:
-      redis:
-        condition: service_healthy
-    environment:
-      PORT: 8090
-      PROFILE: "dev"# dev, prod
-      LOG_LEVEL: "debug"#trace, debug, info, warn, error
-      REDIS_ADDR: "redis:6379"
-      CONSUL_HOST: "consul:8500"
-      CONSUL_SERVICE_NAME: "websocket-gateway"
-      CONSUL_SERVICE_ADDRESS: "board-project-websocket-gateway"
-      CONSUL_TAGS: "urlprefix-/api/v1/ws,proto=ws"
-    networks:
-      - board-project
+#  board-project-2:
+#    container_name: board-project-container
+#    image: ghcr.io/ttodoshi/board-project:latest
+#    ports:
+#      - "8090:8090"
+#    depends_on:
+#      redis:
+#        condition: service_healthy
+#    environment:
+#      PORT: 8090
+#      PROFILE: "dev"# dev, prod
+#      LOG_LEVEL: "debug"#trace, debug, info, warn, error
+#      REDIS_ADDR: "redis:6379"
+#      CONSUL_HOST: "consul:8500"
+#      CONSUL_SERVICE_NAME: "board-project"
+#      CONSUL_SERVICE_ADDRESS: "board-project-2"
+#      CONSUL_TAGS: "urlprefix-/api/v1"
+#    networks:
+#      - board-project
 
 networks:
   board-project:

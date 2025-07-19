@@ -1,6 +1,8 @@
 # Backend for a Board project
 
-this is the main repo for all board-project microservices
+Realtime board application to draw and watch
+
+Swagger URL: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ### how to run:
 
@@ -8,7 +10,14 @@ this is the main repo for all board-project microservices
 docker compose up -d
 ```
 
-### all services:
+### how to build
 
-- [room service](https://github.com/ttodoshi/board-project-room-service)
-- [websocket-gateway](https://github.com/ttodoshi/board-project-websocket-gateway)
+- container
+```shell
+docker buildx build . -t ghcr.io/ttodoshi/board-project:latest
+```
+
+- locally
+```shell
+make build
+```

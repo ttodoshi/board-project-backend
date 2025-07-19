@@ -1,0 +1,48 @@
+basePath: /api/v1
+definitions:
+  dto.ErrorResponseDto:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      path:
+        type: string
+      status:
+        type: integer
+      timestamp:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: Board Project API
+  version: "1.0"
+paths:
+  /rooms:
+    post:
+      consumes:
+      - application/json
+      description: Create room
+      parameters:
+      - default: userID=
+        description: userID
+        in: header
+        name: Cookie
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/dto.ErrorResponseDto'
+      summary: Create room
+      tags:
+      - rooms
+swagger: "2.0"
